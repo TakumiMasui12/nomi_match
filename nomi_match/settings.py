@@ -77,13 +77,9 @@ DATABASES = {
         'ENGINE': 'mysql.connector.django',
         'NAME': 'nomi_match',
         'USER': 'user',
-        'PASSWORD': 'nomi_match',
+        'PASSWORD': 'mysql',
         'HOST': 'localhost',
         'PORT': '3306',
-        'OPTIONS': {
-            'autocommit': True,
-            'use_pure': True,
-        },
     }
 }
 
