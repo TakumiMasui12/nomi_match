@@ -62,7 +62,7 @@ class Events(models.Model):
         null=False
     )
     area = models.CharField(
-        max_kength=128
+        max_kength=128,
     )
     genre_tags = models.JSONField(
         null=False
@@ -251,5 +251,118 @@ class Availabilities(models.Model):
         max_length=256
     )
     updated_at = models.DateTimeField(
+        null=False
+    )
+
+# 投票テーブル
+class Polls(models.Model):
+    type_choices = (
+        ("genre", "ジャンル"),
+        ("store", "店舗"),
+    )
+    status_choices = (
+        ("open", "公開中"),
+        ("closed", "締切済み"),
+    )
+
+    id = models.BigAutoField(
+        primary_key=True,
+        null=False
+    )
+    event_id = models.ForeignKey(
+        Events,
+        on_delete=models.CASCADE,
+        null=False
+    )
+    type = models.CharField(
+        max_length=8,
+        null=False,
+        choices=type_choices
+    )
+    status = models.CharField(
+        max_length=8,
+        null=False,
+        choices=status_choices,
+        default="open"
+    )
+    created_at = models.DateTimeField(
+        null=False
+    )
+
+class PollOptions(models.Model):
+    id = models.BigAutoField(
+        primary_key=True,
+        null=False
+    )
+    poll_id = models.ForeignKey(
+        Polls,
+        on_delete=models.CASCADE,
+        null=False,
+    )
+    label = models.CharField(
+        max_length=128,
+        null=False
+    )
+    external_url = models.TextField()
+    created_at = models.DateTimeField(
+        null=False
+    )
+
+class PollVotes(models.Model):
+    poll_id = models.ForeignKey(
+        Polls,
+        on_delete=models.CASCADE,
+        null=False
+    )
+    participant_identity_id = models.ForeignKey(
+        ParticipantIdentities,
+        on_delete=models.CASCADE,
+        null=False
+    )
+    option_id = models.ForeignKey(
+        PollOptions,
+        on_delete=models.CASCADE,
+        null=False
+    )
+    voted_at = models.DateTimeField(
+        null=False
+    )
+
+# 確定内容テーブル
+class Decisions(models.Model):
+    event_id = models.ForeignKey(
+        Events,
+        on_delete=models.CASCADE,
+        null=False,
+        primary_key=True,
+    )
+    decided_slot_id = models.ForeignKey(
+        ScheduleSlots,
+        on_delete=models.CASCADE,
+    )
+    decided_store_name = models.CharField(
+        max_length=128,
+    )
+    decided_store_url = models.TextField()
+    decided_online_url = models.TextField()
+    decided_at = models.DateTimeField()
+
+class AiSuggestions(models.Model):
+    id = models.BigAutoField(
+        primary_key=True,
+        null=False
+    )
+    event_id = models.ForeignKey(
+        Events,
+        on_delete=models.CASCADE,
+        null=False
+    )
+    prompt_snapshot = models.JSONField(
+        null=False
+    )
+    response_snapshot = models.JSONField(
+        null=False
+    )
+    created_at = models.DateTimeField(
         null=False
     )
