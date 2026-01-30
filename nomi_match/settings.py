@@ -37,6 +37,15 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'rest_framework',
+    'nomi_match.accounts',
+    'nomi_match.events',
+    'nomi_match.participants',
+    'nomi_match.schedules',
+    'nomi_match.polls',
+    'nomi_match.decisions',
+    'nomi_match.calendars',
+    'nomi_match.LLM',
 ]
 
 MIDDLEWARE = [
@@ -48,6 +57,16 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
+
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': [
+        'rest_framework.authentication.SessionAuthentication',
+    ],
+    'DEFAULT_PERMISSION_CLASSES': [
+        'rest_framework.permissions.AllowAny',
+    ],
+}
+
 
 ROOT_URLCONF = 'nomi_match.urls'
 

@@ -62,7 +62,7 @@ class Events(models.Model):
         null=False
     )
     area = models.CharField(
-        max_kength=128,
+        max_length=128,
     )
     genre_tags = models.JSONField(
         null=False
@@ -91,7 +91,7 @@ class Events(models.Model):
     status = models.CharField(
         max_length=16,
         null=False,
-        default="draft"
+        default="draft",
         choices=status_choices
     )
     created_at = models.DateTimeField(
@@ -208,7 +208,7 @@ class ScheduleSlots(models.Model):
     )
     created_by = models.CharField(
         max_length=12,
-        null=False
+        null=False,
         choices=created_by_choices,
     )
     created_by_participant_identity_id = models.ForeignKey(
